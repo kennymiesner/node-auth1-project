@@ -1,3 +1,10 @@
+module.exports = {
+  restricted,
+  checkUsernameFree,
+  checkUsernameExists,
+  checkPasswordLength,
+}
+
 /*
   If the user does not have a session saved in the server
 
@@ -6,8 +13,15 @@
     "message": "You shall not pass!"
   }
 */
-function restricted() {
-
+const restricted = (req, res, next) => {
+  if (req.session.user) {
+    next()
+  } else (
+    next({
+      status: 401,
+      message: 'You shall not pass!'
+    })
+  )
 }
 
 /*
